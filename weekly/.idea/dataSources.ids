@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="dataSourceStorage">
+  <data-source name="SQLite -" uuid="0ec86df2-704b-4e3b-93f5-374d91407b8e">
+    <database-info product="SQLite" version="3.8.11" jdbc-version="2.1" driver-name="SQLiteJDBC" driver-version="native"/>
+    <case-sensitivity plain-identifiers="mixed" quoted-identifiers="mixed"/>
+    <schema name="" catalog=""/>
+    <table name="t_weekly" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="username" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="date" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="num" sqlType="INT" precision="2000000000" scale="10" nullable="false" jdbcType="4" def="MQ=="/>
+      <column name="current_start" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="current_end" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="next_start" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="next_end" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <primary-key name="[]" columns="[id]"/>
+    </table>
+    <table name="t_weekly_finished" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="project" sqlType="TEXT" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="content" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="type" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="startdate" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="enddate" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="amount" sqlType="FLOAT" precision="2000000000" scale="10" nullable="false" jdbcType="6" def="MA=="/>
+      <column name="achievement" sqlType="TEXT" precision="2000000000" scale="10" nullable="true" jdbcType="12" def="J+aXoCc="/>
+    </table>
+    <table name="t_weekly_plan" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="project" sqlType="TEXT" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="content" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="startdate" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="enddate" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="amount" sqlType="FLOAT" precision="2000000000" scale="10" nullable="false" jdbcType="6" def="MA=="/>
+      <column name="achievement" sqlType="TEXT" precision="2000000000" scale="10" nullable="true" jdbcType="12" def="J+aXoCc="/>
+    </table>
+    <table name="t_weekly_unfinished" schema="" catalog="" type="TABLE">
+      <column name="id" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="project" sqlType="TEXT" precision="2000000000" scale="10" nullable="true" jdbcType="12"/>
+      <column name="content" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="actual" sqlType="TEXT" precision="2000000000" scale="10" nullable="false" jdbcType="12"/>
+      <column name="reason" sqlType="TEXT" precision="2000000000" scale="10" nullable="true" jdbcType="12" def="J+aXoCc="/>
+      <column name="plandate" sqlType="TEXT" precision="2000000000" scale="10" nullable="true" jdbcType="12" def="J+aXoCc="/>
+      <column name="support" sqlType="TEXT" precision="2000000000" scale="10" nullable="true" jdbcType="12" def="J+aXoCc="/>
+    </table>
+  </data-source>
+</component>

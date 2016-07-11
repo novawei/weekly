@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>Weekly</title>
+    <link href="../static/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="../static/css/bootstrap-datetimepicker.css" rel="stylesheet" type="text/css">
+    <script src="../static/js/jquery-3.0.0.min.js"></script>
+    <script src="../static/js/bootstrap.js"></script>
+    <script src="../static/js/bootstrap-datetimepicker.js"></script>
+    <script src="../static/js/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+    <script src="../static/js/weekly.js"></script>
+</head>
+<body>
+<div class="container" style="width:100%!important">
+        <table class="table table-bordered">
+            <tr class="bg-primary">
+                <td colspan="7">
+                    <div>
+                        <label>{{ username }}</label>
+                        <form action="/" method="post" class="form form-inline form-horizontal">
+                            <label>月份</label>
+                            {% if date %}
+                                <input size="16" style="width:100px;display:inline" readonly type="text" class="form-control weekly-yyyymm" id="date" name="date" value="{{ date }}">
+                            {% else %}
+                                <input size="16" style="width:100px;display:inline" readonly type="text" class="form-control weekly-yyyymm" id="date" name="date">
+                            {% endif %}
+                            <label>第</label>
+                            <select class="form-control" style="display:inline;width:60px;" id="num" name="num">
+                                {% for i in [1,2,3,4,5] %}
+                                    {% if num == i %}
+                                        <option selected="selected">{{ i }}</option>
+                                    {% else %}
+                                        <option>{{ i }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                            <label>周</label>
+                            <input class="form-control btn btn-default" type="submit" value="查询">
+                        </form>
+                    </div>
+                </td>
+            </tr>
+            <tr class="bg-info">
+                <th colspan="7">
+                    <div>
+                        <label>本周完成工作</label>
+                        {% if startdate %}
+                            <input size="16" style="width:100px;display:inline" readonly type="text" class="form-control weekly-yyyymmdd" id="current_start" name="current_start" value="{{ startdate }}">
+                        {% else %}
+                            <input size="16" style="width:100px;display:inline" readonly type="text" class="form-control weekly-yyyymmdd" id="current_start" name="current_start">
+                        {% endif %}
+                        <label>~</label>
+                        {% if enddate %}
+                            <input size="16" style="width:100px;display:inline" readonly type="text" class="form-control weekly-yyyymmdd" id="current_end" name="current_end" value="{{ enddate }}">
+                        {% else %}
+                            <input size="16" style="width:100px;display:inline" readonly type="text" class="form-control weekly-yyyymmdd" id="current_end" name="current_end">
+                        {% endif %}
+                        <button type="button" class="btn btn-danger" id="insertBtn1" style="float: right">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th>项目</th>
+                <th>完成的工作</th>
+                <th>工作类型</th>
+                <th>实际开始时间</th>
+                <th>实际完成时间</th>
+                <th>实际投入工时</th>
+                <th>实际提交成果物</th>
+            </tr>
+            {% if items %}
+                {% for item in items %}
+                    <tr class="finished">
+                        <td><textarea class="form-control" rows="1" id="project" name="project">{{ item[1] }}</textarea></td>
+                        <td><textarea class="form-control" rows="1" id="content" name="content">{{ item[2] }}</textarea></td>
+                        <td>
+                            <select class="form-control" id="type" name="type">
+                                <option>计划任务</option>
+                                <option>临时任务</option>
+                            </select>
+                        </td>
+                        <td>
+                            <input size="16" readonly type="text" class="form-control weekly-yyyymmdd" id="startdate" name="startdate" value="{{ item[3] }}">
+                        </td>
+                        <td>
+                            <input size="16" readonly type="text" class="form-control weekly-yyyymmdd" id="enddate" name="enddate" value="{{ item[4] }}">
+                        </td>
+                        <td>
+                            <input type="number" class="form-control" id="amount" name="amount" value="{{ item[5] }}">
+                        </td>
+                        <td><textarea class="form-control" rows="1" id="achievement" name="achievement">{{ item[6] }}</textarea></td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr class="finished">
+                    <td><textarea class="form-control" rows="1" id="project" name="project"></textarea></td>
+                    <td><textarea class="form-control" rows="1" id="content" name="content"></textarea></td>
+                    <td>
+                        <select class="form-control" id="type" name="type">
+                            <option>计划任务</option>
+                            <option>临时任务</option>
+                        </select>
+                    </td>
+                    <td>
+                        <input size="16" readonly type="text" class="form-control weekly-yyyymmdd" id="startdate" name="startdate">
+                    </td>
+                    <td>
+                        <input size="16" readonly type="text" class="form-control weekly-yyyymmdd" id="enddate" name="enddate">
+                    </td>
+                    <td>
+                        <input type="number" class="form-control" id="amount" name="amount">
+                    </td>
+                    <td><textarea class="form-control" rows="1" id="achievement" name="achievement"></textarea></td>
+                </tr>
+            {% endif %}
+            <tr style="display: none" id="insertP1"></tr>
+
+            <tr class="bg-info">
+                <th colspan="7">
+                    <label>本周按计划未完成的工作</label>
+                    <button type="button" class="btn btn-danger" id="insertBtn2" style="float: right">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    </button>
+                </th>
+            </tr>
+            <tr>
+                <th>项目</th>
+                <th colspan="2">未完成的工作</th>
+                <th>实际进展</th>
+                <th>原因说明</th>
+                <th>计划完成时间</th>
+                <th>所需支持</th>
+            </tr>
+            <tr style="display: none" id="insertP2"></tr>
+
+            <tr class="bg-info">
+                <th colspan="7">
+                    <div>
+                        <label>下周工作计划</label>
+                        <input size="16" style="width:100px;display:inline" readonly type="text" class="form-control weekly-yyyymmdd" id="next_start" name="next_start">
+                        <label>~</label>
+                        <input size="16" style="width:100px;display:inline" readonly type="text" class="form-control weekly-yyyymmdd" id="next_end" name="next_end">
+                        <button type="button" class="btn btn-danger" id="insertBtn3" style="float: right">
+                            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        </button>
+                    </div>
+                </th>
+            </tr>
+            <tr>
+                <th>项目</th>
+                <th colspan="2">计划工作内容</th>
+                <th>计划开始时间</th>
+                <th>计划完成时间</th>
+                <th>计划投入工时</th>
+                <th>计划提交成果物</th>
+            </tr>
+            <tr class="plan">
+                <td><textarea class="form-control" rows="1" id="project" name="project"></textarea></td>
+                <td colspan="2"><textarea class="form-control" rows="1" id="content" name="content"></textarea></td>
+                <td>
+                    <input size="16" readonly type="text" class="form-control weekly-yyyymmdd" id="startdate" name="startdate">
+                </td>
+                <td>
+                    <input size="16" readonly type="text" class="form-control weekly-yyyymmdd" id="enddate" name="enddate">
+                </td>
+                <td>
+                    <input type="number" class="form-control" id="amount" name="amount">
+                </td>
+                <td><textarea class="form-control" rows="1" id="achievement" name="achievement"></textarea></td>
+            </tr>
+            <tr style="display: none" id="insertP3"></tr>
+
+            <tr>
+                <td colspan="7">
+                    <div class="center-block" style="width: 180px;">
+                        <button type="button" class="btn btn-primary" id="save">保存</button>
+                        <button type="button" class="btn btn-primary" id="add">生成周报</button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+</div>
+</body>
+</html>
